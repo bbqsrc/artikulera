@@ -10,20 +10,18 @@ var models = require('./models/index')(require('mongoose')),
 
 const TAG = 'artikulera/theme-manager';
 
-Log.setLevel(0);
-
 class Theme {
   constructor(themesDir, themeName, globals) {
-    this.path = themesDir;
     this.name = themeName;
+    this.path = resolvePath(themesDir, themeName);
+
     this.globals = globals || {};
 
     this.templates = {};
 
-    let themePath = resolvePath(themesDir, themeName);
-    this.meta = require(resolvePath(themePath, 'theme.json'));
+    this.meta = require(resolvePath(this.path, 'theme.json'));
 
-    let tplPath = resolvePath(themePath, 'templates');
+    let tplPath = resolvePath(this.path, 'templates');
 
     // Cache views
     for (let tplName of this.meta.templates) {
@@ -33,15 +31,15 @@ class Theme {
     this.staticUrl = '/theme/' + this.name;
 
     // Helpers!
+    let theme = this;
     this.helpers = {
       asset: function(assetPath) {
         return resolvePath(this.staticUrl, assetPath);
-      }
+      }.bind(theme)
     };
   }
 
   render(viewName, locals) {
-    Log.d(TAG, 'render view', arguments);
     return this.templates[viewName].render(locals);
   }
 
@@ -63,7 +61,6 @@ class Theme {
 
     return function*(next) {
       this.renderTheme = function*(viewName, locals) {
-        Log.d(TAG, 'theme', theme);
         let l = extend({}, theme.globals, theme.helpers, locals);
         this.type = 'html';
         this.body = yield theme.render(viewName, l);
