@@ -1,0 +1,45 @@
+body {
+  font-family: "Lucida Grande", "Arial", sans-serif;
+  padding-top: 50px;
+}
+
+.content {
+  margin: 0 auto;
+  max-width: 72em;
+}
+
+.navbar .pure-menu {
+  font-size: 24px;
+  color: rgb(51, 51, 51);
+  background-color: white;
+  border-bottom: 1px solid #e7e7e7;
+  height: 51px;
+  padding: 0 5px;
+}
+
+.navbar .pure-menu-item,
+.navbar .pure-menu-heading {
+  vertical-align: top;
+}
+
+.navbar .pure-menu a {
+  color: #777;
+
+}
+
+.navbar .pure-menu a:hover {
+  color: #555;
+}
+
+a.pure-menu-heading {
+  font-weight: bold;
+  line-height: 1em;
+  font-size: 40px;
+  padding: 5px;
+}
+
+.post {
+  border: 1px solid #eee;
+  margin-bottom: 1em;
+  padding: 1em;
+}

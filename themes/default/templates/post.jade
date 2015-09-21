@@ -1,0 +1,10 @@
+extends layout
+block body
+  article.post
+    header.post-title
+      h2
+        a(href=post.url)= post.title
+      time(datetime=post.published_on.toISOString())= moment(post.published_on).format('llll')
+    
+    div !{post.rendered}
+  

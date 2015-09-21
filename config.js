@@ -31,7 +31,8 @@ var config = _.defaults({}, baseConfig, {
   cookieMaxAge: 900000,
 
   siteConfig: {
-    theme: 'brendan'
+    theme: 'default',
+    title: "Default Blog"
   },
 
   get mongoURL() {

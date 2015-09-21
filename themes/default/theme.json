@@ -1,0 +1,19 @@
+{
+  "name": "Default Theme",
+  "version": "1.0.0",
+  "author": "Brendan Molloy <brendan@bbqsrc.net>",
+  "templates": [
+    "posts",
+    "post",
+    "page",
+    "home"
+  ],
+  "content": {
+    "menu": [
+      {
+        "id": "primary",
+        "name": "Primary Navigation"
+      }
+    ]
+  }
+}

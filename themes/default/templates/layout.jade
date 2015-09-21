@@ -1,0 +1,25 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title #{pageTitle} - #{site.title}
+      
+    //- theming
+    link(href=asset('css/pure-min.css') rel='stylesheet')
+    link(href=asset('css/grids-responsive-min.css') rel='stylesheet')
+    link(href=asset('css/style.css') rel='stylesheet')
+
+  body
+    header.navbar
+      nav.pure-menu.pure-menu-horizontal.pure-menu-fixed
+        a.pure-menu-heading(href='/')= site.title
+        ul.pure-menu-list
+          if menus && menus.primary
+            each item in menus.primary
+              if item.type == 'separator'
+                li.pure-menu-separator
+              else
+                li.pure-menu-item
+                  a.pure-menu-link(href=item.href)= item.text
+        
+    block body
