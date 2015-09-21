@@ -23,12 +23,11 @@ router
 })
 
 .get('/', function*() {
-  return yield this.renderTheme('brendan', 'home');
+  return yield this.renderTheme('home');
 })
 
 .route('/admin/login', {
   get: function*() {
-    this.body = 'derp';
     return yield this.render('login');
   },
 
@@ -66,7 +65,7 @@ router
     return yield next;
   }
 
-  return yield this.renderTheme('brendan', 'post', { post: post });
+  return yield this.renderTheme('post', { post: post });
 })
 
 .get('/:pageSlug(.+)', function*(next) {
@@ -77,10 +76,8 @@ router
   if (!page) {
     return yield next;
   } else {
-    return yield this.renderTheme('brendan', 'page', { page: page });
+    return yield this.renderTheme('page', { page: page });
   }
-  //let data = extend(yield getViewData('page'), { post: post });
-  //yield this.render('page', data);
 });
 
 

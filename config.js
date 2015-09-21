@@ -30,7 +30,9 @@ var config = _.defaults({}, baseConfig, {
   cookieName: 'artikulera.id',
   cookieMaxAge: 900000,
 
-  siteConfig: {},
+  siteConfig: {
+    theme: 'brendan'
+  },
 
   get mongoURL() {
     return 'mongodb://' + this.mongoHost + ':' + this.mongoPort + '/' + this.mongoDB;

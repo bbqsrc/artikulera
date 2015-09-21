@@ -18,6 +18,7 @@
     "jade": "^1.11.0",
     "koa": "^1.0.0",
     "koa-bodyparser": "^2.0.1",
+    "koa-compose": "^2.3.0",
     "koa-helmet": "^0.2.0",
     "koa-huggare": "^0.1.5",
     "koa-passport": "^1.2.0",
