@@ -1,0 +1,22 @@
+extends layout
+block body
+  main
+    form.pure-form.pure-form-stacked(method='post')
+      fieldset
+        legend Create new post
+        
+        label(for='title') Title
+        input.pure-input-1(name='title' id='title' placeholder='Title')
+        
+        label(for='slug') Slug
+        input.pure-input-1(name='slug' id='slug' placeholder='Slug')
+        
+        label(for='content') Content 
+          small (in Markdown)
+        textarea.pure-input-1(name='content' id='content' placeholder='Your article goes here.' style='min-height: 8em')
+        
+        button.pure-button.pure-button-primary(type='submit') Create
+          
+          
+    
+    
