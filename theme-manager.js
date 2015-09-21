@@ -6,6 +6,7 @@ var models = require('./models/index')(require('mongoose')),
     compose = require('koa-compose'),
     send = require('koa-send'),
     extend = require('extend'),
+    moment = require('moment'),
     Log = require('huggare');
 
 const TAG = 'artikulera/theme-manager';
@@ -15,18 +16,16 @@ class Theme {
     this.name = themeName;
     this.path = resolvePath(themesDir, themeName);
 
-    this.globals = globals || {};
+    // globals: always include moment because <3
+    this.globals = extend({
+      moment: moment
+    }, globals);
 
     this.templates = {};
 
     this.meta = require(resolvePath(this.path, 'theme.json'));
 
-    let tplPath = resolvePath(this.path, 'templates');
-
-    // Cache views
-    for (let tplName of this.meta.templates) {
-      this.templates[tplName] = new models.Theme(tplPath, tplName);
-    }
+    this.templatePath = resolvePath(this.path, 'templates');
 
     this.staticUrl = '/theme/' + this.name;
 
@@ -39,8 +38,21 @@ class Theme {
     };
   }
 
+  getTemplate(tplName) {
+    if (!process.env.NODE_ENV) { // dev mode
+      return new models.Theme(this.templatePath, tplName);
+    }
+
+    // Cache views
+    if (!this.templates[tplName]) {
+      this.templates[tplName] = new models.Theme(this.templatePath, tplName);
+    }
+
+    return this.templates[tplName];
+  }
+
   render(viewName, locals) {
-    return this.templates[viewName].render(locals);
+    return this.getTemplate(viewName).render(locals);
   }
 
   mountStatic() {

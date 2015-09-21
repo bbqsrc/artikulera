@@ -36,6 +36,17 @@ router
   })
 })
 
+.get('/posts', function*() {
+  // TODO pagination
+  let posts = yield models.Post.find({
+    published_on: { $exists: true }
+  }).sort({
+    published_on: -1
+  }).exec();
+
+  return yield this.renderTheme('posts', { posts: posts });
+})
+
 .get('/:year(\\d{4})/:month(\\d{1,2})/:day(\\d{1,2})/:postSlug', function*(next) {
   Log.i(TAG, 'blague');
 
@@ -44,24 +55,12 @@ router
       d = parseInt(this.params.day, 10);
 
   let date = moment({y: y, M: m, d: d});
-
   if (!date.isValid()) {
-    Log.w(TAG, 'invalid date', date);
     return yield next;
   }
 
-  let q = {
-    published_on: {
-      $gte: date.toDate(),
-      $lt: date.clone().add(1, 'days').toDate()
-    },
-    slug: this.params.postSlug
-  };
-
-  let post = yield models.Post.findOne(q).exec();
-
+  let post = yield models.Post.findPostByDateSlug(date, this.params.postSlug);
   if (!post) {
-    Log.w(TAG, 'no post!');
     return yield next;
   }
 
